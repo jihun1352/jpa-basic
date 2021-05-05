@@ -17,11 +17,18 @@ public class JpaMain {
 
         try {
             //영속
-            Member member = new Member(200L, "member200");
-            em.persist(member);
+            Member member1 = new Member();
+            Member member2 = new Member();
+            member1.setName("A");
+            member1.setRoleType(RoleType.ADMIN);
 
-            em.flush();
-            System.out.println("===============");
+            member2.setName("B");
+            member2.setRoleType(RoleType.USER);
+
+            em.persist(member1);
+            em.persist(member2);
+            System.out.println("member1.getId() = " + member1.getId());
+            System.out.println("===================================");
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
