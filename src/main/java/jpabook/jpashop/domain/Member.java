@@ -37,7 +37,10 @@ public class Member {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) {
         this.team = team;
+        // setter에 연관관계 편의 메서드로 Member.setTeam()을 할때 Team에도 추가를 해준다.
+        // this는 나 자신 Member의 인스턴스
+        team.getMembers().add(this);
     }
 }

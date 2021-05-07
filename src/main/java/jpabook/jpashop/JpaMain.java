@@ -21,27 +21,32 @@ public class JpaMain {
 
         try {
 
-            //저장
             Team team = new Team();
-            team.setName("TeamA");
+            team.setName("teamA");
             em.persist(team);
 
+            // Member이 주인이기 때문에 setTeam(team)을 넣어준다.
             Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
+            member.setUsername("jpa");
+            member.changeTeam(team);
             em.persist(member);
 
-            em.flush();
-            em.clear();
-            System.out.println("====================================");
+            //연관관계 편의 메소드로 member.setTeam(team);에서 team에도 같이 들어가기 때문에
+            //아래 코드는 없어도 된다.
+            //team.getMembers().add(member);
 
-            Member findMember = em.find(Member.class, member.getId());
-                        
-            List<Member> members = findMember.getTeam().getMembers();
-            for (Member m : members) {
-                System.out.println("m.getUsername() = " + m.getUsername());
+            //em.flush();
+            //em.clear();
+
+            // flush, clear을 안하면 em.find시 위의 em.persist로 인해 1차 캐쉬에 저장되어 있어서
+            // 메모리상에서 조회를 하기 때문에 값이 없다.
+            // member1의 사이즈가 0이 된다.
+            Team team1 = em.find(Team.class, team.getId());
+            List<Member> member1 = team1.getMembers();
+            System.out.println("member1.size() = " + member1.size());
+            for (Member m : member1) {
+                m.getUsername();
             }
-
 
             tx.commit();
         } catch (Exception e) {
