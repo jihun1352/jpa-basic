@@ -1,7 +1,8 @@
 package jpabook.jpashop;
 
-import hellojpa.Member;
 import hellojpa.RoleType;
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +20,29 @@ public class JpaMain {
         tx.begin();
 
         try {
+
+            //저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+            System.out.println("====================================");
+
+            Member findMember = em.find(Member.class, member.getId());
+                        
+            List<Member> members = findMember.getTeam().getMembers();
+            for (Member m : members) {
+                System.out.println("m.getUsername() = " + m.getUsername());
+            }
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
