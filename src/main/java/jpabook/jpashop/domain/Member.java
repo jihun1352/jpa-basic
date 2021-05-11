@@ -1,11 +1,13 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -13,8 +15,7 @@ public class Member {
     private Long id;
      @Column(name = "USERNAME")
     private String username;
-     /*@Column(name = "TEAM_ID")
-    private Long teamId;*/
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
@@ -31,6 +32,34 @@ public class Member {
 
     public Long getId() {
         return id;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
+
+    public List<MemberProduct> getMemberProducts() {
+        return memberProducts;
+    }
+
+    public void setMemberProducts(List<MemberProduct> memberProducts) {
+        this.memberProducts = memberProducts;
     }
 
     public void setId(Long id) {
