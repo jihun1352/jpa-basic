@@ -21,26 +21,17 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
+            child1.setName("323");
+            child2.setName("chil2323d2");
 
-            Member member = new Member();
-            member.setUsername("jpa");
-            member.setTeam(team);
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-
-            Team findTeam = findMember.getTeam();
-            System.out.println("===========================");
-            // 위에서 영속성컨텍스트를 초기화 해주었고(em.clear), Member 엔티티에 지연로딩을 걸어놔서
-            // findTeam.getClass()를 하면 프록시 값이 출력이 된다.
-            System.out.println("team.getClass() = " + findTeam.getClass());
-            findTeam.getName();   // 직접 team내의 값을 조회할때 select 쿼리가 실행됨.
+            Parent parent = new Parent();
+            parent.setName("parent!");
+            parent.addChild(child1);
+            parent.addChild(child2);
+            // Parent엔티티에 cascade가 걸려있으므로 한번만 해주면된다.
+            em.persist(parent);
 
             tx.commit();
         } catch (Exception e) {
