@@ -21,17 +21,10 @@ public class JpaMain {
 
         try {
 
-            Child child1 = new Child();
-            Child child2 = new Child();
-            child1.setName("323");
-            child2.setName("chil2323d2");
-
-            Parent parent = new Parent();
-            parent.setName("parent!");
-            parent.addChild(child1);
-            parent.addChild(child2);
-            // Parent엔티티에 cascade가 걸려있으므로 한번만 해주면된다.
-            em.persist(parent);
+            Member member = new Member();
+            member.setUsername("jpa");
+            member.setAddress(new Address("city","street","1000"));
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {

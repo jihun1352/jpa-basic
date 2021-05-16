@@ -7,14 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity{
-
+public class Member{
     @Id
     @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
      @Column(name = "USERNAME")
     private String username;
+    // 시간
+    @Embedded   // 값 타입을 사용하는 곳에 사용
+    private Period period;
+    // 주소
+    @Embedded   // 값 타입을 사용하는 곳에 사용
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
