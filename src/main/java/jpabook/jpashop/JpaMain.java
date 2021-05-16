@@ -21,10 +21,18 @@ public class JpaMain {
 
         try {
 
+            // 임베디드 타입인 주소
+            Address address = new Address("city","street","1000");
+
             Member member = new Member();
             member.setUsername("jpa");
-            member.setAddress(new Address("city","street","1000"));
+            member.setAddress(address);
             em.persist(member);
+
+            Member member2 = new Member();
+            member2.setUsername("jpa2");
+            member2.setAddress(new Address("newCity","street","1000"));
+            em.persist(member2);
 
             tx.commit();
         } catch (Exception e) {
