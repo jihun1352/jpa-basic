@@ -23,6 +23,9 @@ public class JpaMain {
 
             // 임베디드 타입인 주소
             Address address = new Address("city","street","1000");
+            Address address2 = new Address("city","street","1000");
+
+            System.out.println("address2 = " + (address.equals(address2)));
 
             Member member = new Member();
             member.setUsername("jpa");
