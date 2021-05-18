@@ -9,6 +9,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -21,21 +22,24 @@ public class JpaMain {
 
         try {
 
-            // 임베디드 타입인 주소
-            Address address = new Address("city","street","1000");
-            Address address2 = new Address("city","street","1000");
-
-            System.out.println("address2 = " + (address.equals(address2)));
-
             Member member = new Member();
-            member.setUsername("jpa");
-            member.setAddress(address);
+            member.setUsername("member1");
+            member.setAddress(new Address("city", "street", "10000"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new AddressEntity("city2", "street", "1000"));
+            member.getAddressHistory().add(new AddressEntity("city3", "street", "1000"));
+
             em.persist(member);
 
-            Member member2 = new Member();
-            member2.setUsername("jpa2");
-            member2.setAddress(new Address("newCity","street","1000"));
-            em.persist(member2);
+            em.flush();
+            em.clear();
+
+            System.out.println("=================================");
+            Member findMember = em.find(Member.class, member.getId());
 
             tx.commit();
         } catch (Exception e) {
