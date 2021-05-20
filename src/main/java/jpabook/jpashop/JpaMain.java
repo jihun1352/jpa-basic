@@ -22,6 +22,9 @@ public class JpaMain {
 
         try {
 
+            List<Member> result = em.createQuery("select m from Member m where m.username like '%kim%")
+                    .getResultList();
+
             Member member = new Member();
             member.setUsername("member1");
             member.setAddress(new Address("city", "street", "10000"));
